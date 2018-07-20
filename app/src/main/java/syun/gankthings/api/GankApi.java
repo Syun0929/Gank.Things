@@ -6,11 +6,12 @@ import java.util.List;
 import io.reactivex.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.Part;
-import syun.gankthings.bean.BaseEntry;
+import retrofit2.http.Path;
+import syun.gankthings.bean.BaseEntity;
 import syun.gankthings.bean.Meizi;
 
 public interface GankApi {
 
     @GET("data/福利/10/{page}")
-    Observable<BaseEntry<List<Meizi>>> getMeizi(@Part("page")int page);
+    Observable<BaseEntity<List<Meizi>>> getMeizi(@Path("page") int page);
 }

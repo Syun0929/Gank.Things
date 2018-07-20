@@ -1,6 +1,6 @@
 package syun.gankthings.bean;
 
-public class BaseEntry<T> {
+public class BaseEntity<T> {
     public boolean error;
     public T results;
 
