@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Window;
@@ -31,6 +32,8 @@ public class MeiziDetailsActivity extends AppCompatActivity {
     TextView tvTitle;
     @BindView(R.id.iv_meizi_details)
     SimpleDraweeView ivMeiziDetails;
+    @BindView(R.id.appbar)
+    AppBarLayout appBar;
 
     String title;
     String url;
@@ -46,7 +49,7 @@ public class MeiziDetailsActivity extends AppCompatActivity {
         getWindow().setSharedElementReturnTransition(DraweeTransition.createTransitionSet(ScalingUtils.ScaleType.FIT_CENTER, ScalingUtils.ScaleType.CENTER_CROP)); // 返回
         //共享动画
         ViewCompat.setTransitionName(ivMeiziDetails,PIC);
-
+        appBar.setAlpha(0.7f);
         initData();
         tvTitle.setText(title);
         Uri uri = Uri.parse(url);
