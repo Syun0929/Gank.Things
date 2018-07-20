@@ -22,7 +22,7 @@
             fresco:viewAspectRatio="0.6"
             android:layout_marginBottom="2dp"
             fresco:fadeDuration="300"
-            fresco:actualImageScaleType="focusCrop"/>
+            fresco:actualImageScaleType="focusCrop" />
         <TextView
             android:id="@+id/tv_title"
             android:layout_width="wrap_content"

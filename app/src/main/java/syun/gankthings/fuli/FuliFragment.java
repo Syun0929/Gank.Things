@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.SharedElementCallback;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -16,6 +17,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.facebook.drawee.drawable.ScalingUtils;
+import com.facebook.drawee.view.DraweeTransition;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.scwang.smartrefresh.header.BezierCircleHeader;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -54,6 +58,11 @@ public class FuliFragment extends Fragment {
     FuliPresenter fuliPresenter;
 
     int page = 1;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+   }
 
     @Nullable
     @Override
@@ -109,6 +118,18 @@ public class FuliFragment extends Fragment {
         intent.putExtra(MeiziDetailsActivity.PIC_URL,meizi.url);
         ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(
                 getActivity(), transitView, MeiziDetailsActivity.PIC);
+        //解决Android 7.0以上返回跳转前页面完成过场动画之后SimpleDraweeView不显示图片
+        ActivityCompat.setExitSharedElementCallback(getActivity(), new SharedElementCallback() {
+            @Override
+            public void onSharedElementEnd(List<String> sharedElementNames, List<View> sharedElements, List<View> sharedElementSnapshots) {
+                super.onSharedElementEnd(sharedElementNames, sharedElements, sharedElementSnapshots);
+                for (View view : sharedElements) {
+                    if (view instanceof SimpleDraweeView) {
+                        view.setVisibility(View.VISIBLE);
+                    }
+                }
+            }
+        });
         ActivityCompat.startActivity(getActivity(),intent,optionsCompat.toBundle());
     }
 
