@@ -80,15 +80,14 @@ public class FuliFragment extends Fragment {
         fuliRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                fuliPresenter.getMeizi(1);
-//                refreshLayout.finishRefresh(2000);
+                page = 1;
+                fuliPresenter.getMeizi(page);
             }
         });
         fuliRefreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
                 fuliPresenter.getMeizi(++page);
-//                refreshLayout.finishLoadMore(2000);
             }
         });
         return rootView;
@@ -136,17 +135,21 @@ public class FuliFragment extends Fragment {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onLoadData(FuliEvent.LoadMeiziDataEvent event){
         meiziAdapter.setMeiziData(event.getList());
-        fuliRefreshLayout.finishRefresh();
+        fuliRefreshLayout.finishRefresh(true);
     }
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onLoadMoreData(FuliEvent.LoadMoreMeiziDataEvent event){
         meiziAdapter.addMeiziData(event.getList());
-        fuliRefreshLayout.finishLoadMore();
+        fuliRefreshLayout.finishLoadMore(true);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void showErrorMsg(FuliEvent.LoadDataErrorEvent event){
-//        fuliRefreshLayout.finishRefresh();
+        if(page==1) {
+            fuliRefreshLayout.finishRefresh(false);
+        }else {
+            fuliRefreshLayout.finishLoadMore(false);
+        }
         Toast.makeText(getContext(),event.getMsg(),Toast.LENGTH_LONG).show();
     }
 }

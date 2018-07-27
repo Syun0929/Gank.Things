@@ -4,6 +4,7 @@ import android.accounts.NetworkErrorException;
 import android.content.Context;
 
 import java.net.ConnectException;
+import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.util.concurrent.TimeoutException;
 
@@ -48,7 +49,8 @@ public abstract class BaseObserver<T> implements Observer<BaseEntity<T>> {
             if (e instanceof ConnectException
                     || e instanceof TimeoutException
                     || e instanceof NetworkErrorException
-                    || e instanceof UnknownHostException) {
+                    || e instanceof UnknownHostException
+                    || e instanceof SocketTimeoutException) {
                 onFailure(e, true);
             } else {
                 onFailure(e, false);
