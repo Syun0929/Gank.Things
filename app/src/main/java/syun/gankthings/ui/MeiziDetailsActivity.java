@@ -3,13 +3,14 @@ package syun.gankthings.ui;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.design.widget.AppBarLayout;
-import android.support.v4.view.ViewCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.view.Window;
+import androidx.annotation.Nullable;
+import com.google.android.material.appbar.AppBarLayout;
+import androidx.core.view.ViewCompat;
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.drawable.ScalingUtils;
 import com.facebook.drawee.interfaces.DraweeController;
@@ -62,6 +63,7 @@ public class MeiziDetailsActivity extends AppCompatActivity {
                 .setOldController(ivMeiziDetails.getController())
                 .build();
         ivMeiziDetails.setController(controller);
+//        Glide.with(this).load(uri).into(ivMeiziDetails);
     }
 
     private void initData() {

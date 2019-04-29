@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
+<androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:id="@+id/card_meizi"
@@ -22,7 +22,8 @@
             fresco:viewAspectRatio="0.6"
             android:layout_marginBottom="2dp"
             fresco:fadeDuration="300"
-            fresco:actualImageScaleType="focusCrop" />
+            fresco:actualImageScaleType="centerCrop"
+            />
         <TextView
             android:id="@+id/tv_title"
             android:layout_width="wrap_content"
@@ -35,4 +36,4 @@
             android:textAppearance="?android:textAppearanceSmall"            />
     </LinearLayout>
 
-</android.support.v7.widget.CardView>
+</androidx.cardview.widget.CardView>

@@ -1,9 +1,9 @@
 package syun.gankthings.adapter;
 
 import android.net.Uri;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +26,7 @@ import syun.gankthings.R;
 import syun.gankthings.bean.Meizi;
 import syun.gankthings.listener.CardViewOnClickListener;
 
-import static android.support.v4.util.Preconditions.checkNotNull;
+import static androidx.core.util.Preconditions.checkNotNull;
 
 
 public class MeiziAdapter extends RecyclerView.Adapter<MeiziAdapter.ViewHolder> {
@@ -48,10 +48,10 @@ public class MeiziAdapter extends RecyclerView.Adapter<MeiziAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         final Meizi meizi = mList.get(position);
-        holder.card.setTag(meizi._id);
+        holder.card.setTag(meizi.get_id());
         holder.meizi = meizi;
-        holder.tvTitle.setText(meizi.desc);
-        Uri uri = Uri.parse(meizi.url);
+        holder.tvTitle.setText(meizi.getDesc());
+        Uri uri = Uri.parse(meizi.getUrl());
         ImageRequest request = ImageRequestBuilder.newBuilderWithSource(uri)
                 .setProgressiveRenderingEnabled(true)
                 .build();
@@ -60,7 +60,7 @@ public class MeiziAdapter extends RecyclerView.Adapter<MeiziAdapter.ViewHolder> 
                 .setOldController(holder.ivMeizi.getController())
                 .build();
         holder.ivMeizi.setController(controller);
-
+//        Glide.with(holder.itemView).load(meizi.getUrl()).into(holder.ivMeizi);
     }
 
     @Override

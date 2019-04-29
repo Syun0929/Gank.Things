@@ -2,25 +2,21 @@ package syun.gankthings.fuli;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.SharedElementCallback;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.util.Log;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.ActivityOptionsCompat;
+import androidx.fragment.app.Fragment;
+import androidx.core.app.SharedElementCallback;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.facebook.drawee.drawable.ScalingUtils;
-import com.facebook.drawee.view.DraweeTransition;
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.scwang.smartrefresh.header.BezierCircleHeader;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
@@ -35,13 +31,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import io.reactivex.Observer;
-import io.reactivex.disposables.Disposable;
-import syun.gankthings.GankApp;
 import syun.gankthings.R;
 import syun.gankthings.adapter.MeiziAdapter;
-import syun.gankthings.base.BaseObserver;
-import syun.gankthings.bean.BaseEntity;
 import syun.gankthings.bean.Meizi;
 import syun.gankthings.listener.CardViewOnClickListener;
 import syun.gankthings.ui.MeiziDetailsActivity;
@@ -114,8 +105,8 @@ public class FuliFragment extends Fragment {
 
     private void startDetailActivity(Meizi meizi, View transitView){
         Intent intent = new Intent(getActivity(),MeiziDetailsActivity.class);
-        intent.putExtra(MeiziDetailsActivity.PIC_TITLE,meizi.desc);
-        intent.putExtra(MeiziDetailsActivity.PIC_URL,meizi.url);
+        intent.putExtra(MeiziDetailsActivity.PIC_TITLE,meizi.getDesc());
+        intent.putExtra(MeiziDetailsActivity.PIC_URL,meizi.getUrl());
         ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(
                 getActivity(), transitView, MeiziDetailsActivity.PIC);
         //解决Android 7.0以上返回跳转前页面完成过场动画之后SimpleDraweeView不显示图片
@@ -146,7 +137,7 @@ public class FuliFragment extends Fragment {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void showErrorMsg(FuliEvent.LoadDataErrorEvent event){
-//        fuliRefreshLayout.finishRefresh();
+        fuliRefreshLayout.finishRefresh();
         Toast.makeText(getContext(),event.getMsg(),Toast.LENGTH_LONG).show();
     }
 }
