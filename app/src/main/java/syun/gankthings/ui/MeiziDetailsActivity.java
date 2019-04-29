@@ -58,7 +58,7 @@ public class MeiziDetailsActivity extends AppCompatActivity {
         appBar.setAlpha(0.7f);
         initData();
         tvTitle.setText(title);
-        Uri uri = Uri.parse(url);
+        Uri uri = Uri.parse(url.replace("http:","https:"));
         PipelineDraweeControllerBuilder controller = Fresco.newDraweeControllerBuilder();
         controller.setUri(uri);
         controller.setOldController(ivMeiziDetails.getController());

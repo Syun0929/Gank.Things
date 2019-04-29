@@ -42,6 +42,7 @@ public class MzAdapter extends RecyclerView.Adapter<MzAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Meizi meizi = mList.get(position);
+        meizi.setUrl(meizi.getUrl().replace("http:","https:"));
         holder.getItemBinding().setMeizi(meizi);
         holder.getItemBinding().getViewModel().setMeizi(meizi);
         holder.getItemBinding().getViewModel().setView(holder.getItemBinding().ivMeizi);

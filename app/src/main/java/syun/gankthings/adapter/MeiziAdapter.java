@@ -51,7 +51,7 @@ public class MeiziAdapter extends RecyclerView.Adapter<MeiziAdapter.ViewHolder> 
         holder.card.setTag(meizi.get_id());
         holder.meizi = meizi;
         holder.tvTitle.setText(meizi.getDesc());
-        Uri uri = Uri.parse(meizi.getUrl());
+        Uri uri = Uri.parse(meizi.getUrl().replace("http:","https:"));
         ImageRequest request = ImageRequestBuilder.newBuilderWithSource(uri)
                 .setProgressiveRenderingEnabled(true)
                 .build();
