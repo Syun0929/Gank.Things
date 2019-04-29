@@ -1,6 +1,7 @@
 package syun.gankthings.ui;
 
 import android.content.Intent;
+import android.graphics.drawable.Animatable;
 import android.net.Uri;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
@@ -12,15 +13,19 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.backends.pipeline.PipelineDraweeControllerBuilder;
+import com.facebook.drawee.controller.BaseControllerListener;
 import com.facebook.drawee.drawable.ScalingUtils;
 import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.DraweeTransition;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.facebook.imagepipeline.image.ImageInfo;
 import com.facebook.imagepipeline.request.ImageRequest;
 import com.facebook.imagepipeline.request.ImageRequestBuilder;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import me.relex.photodraweeview.PhotoDraweeView;
 import syun.gankthings.R;
 
 public class MeiziDetailsActivity extends AppCompatActivity {
@@ -32,7 +37,7 @@ public class MeiziDetailsActivity extends AppCompatActivity {
     @BindView(R.id.title)
     TextView tvTitle;
     @BindView(R.id.iv_meizi_details)
-    SimpleDraweeView ivMeiziDetails;
+    PhotoDraweeView ivMeiziDetails;
     @BindView(R.id.appbar)
     AppBarLayout appBar;
 
@@ -54,16 +59,20 @@ public class MeiziDetailsActivity extends AppCompatActivity {
         initData();
         tvTitle.setText(title);
         Uri uri = Uri.parse(url);
-//        ivMeiziDetails.setImageURI(uri);
-        ImageRequest request = ImageRequestBuilder.newBuilderWithSource(uri)
-                .setProgressiveRenderingEnabled(true)
-                .build();
-        DraweeController controller = Fresco.newDraweeControllerBuilder()
-                .setImageRequest(request)
-                .setOldController(ivMeiziDetails.getController())
-                .build();
-        ivMeiziDetails.setController(controller);
-//        Glide.with(this).load(uri).into(ivMeiziDetails);
+        PipelineDraweeControllerBuilder controller = Fresco.newDraweeControllerBuilder();
+        controller.setUri(uri);
+        controller.setOldController(ivMeiziDetails.getController());
+        controller.setControllerListener(new BaseControllerListener<ImageInfo>() {
+            @Override
+            public void onFinalImageSet(String id, ImageInfo imageInfo, Animatable animatable) {
+                super.onFinalImageSet(id, imageInfo, animatable);
+                if (imageInfo == null || ivMeiziDetails == null) {
+                    return;
+                }
+                ivMeiziDetails.update(imageInfo.getWidth(), imageInfo.getHeight());
+            }
+        });
+        ivMeiziDetails.setController(controller.build());
     }
 
     private void initData() {

@@ -16,7 +16,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.facebook.drawee.drawable.ScalingUtils;
+import com.facebook.drawee.view.DraweeTransition;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.scwang.smartrefresh.header.BezierCircleHeader;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
@@ -31,8 +34,13 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
+import syun.gankthings.GankApp;
 import syun.gankthings.R;
 import syun.gankthings.adapter.MeiziAdapter;
+import syun.gankthings.base.BaseObserver;
+import syun.gankthings.bean.BaseEntity;
 import syun.gankthings.bean.Meizi;
 import syun.gankthings.listener.CardViewOnClickListener;
 import syun.gankthings.ui.MeiziDetailsActivity;
@@ -71,15 +79,14 @@ public class FuliFragment extends Fragment {
         fuliRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                fuliPresenter.getMeizi(1);
-//                refreshLayout.finishRefresh(2000);
+                page = 1;
+                fuliPresenter.getMeizi(page);
             }
         });
         fuliRefreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
                 fuliPresenter.getMeizi(++page);
-//                refreshLayout.finishLoadMore(2000);
             }
         });
         return rootView;
